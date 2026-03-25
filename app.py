@@ -53,8 +53,8 @@ def index():
                 document['Password'] =  sha256_crypt.hash(request.form['password-signup'])
                 document['Timestamp'] = datetime.now()
                 db.users.insert_one(document)
-                session['email'] = email
-                session['name'] = user['First Name']
+                session['email'] = document['Email']
+                session['name'] = document['First Name']
                 flash("Signup Successful!", "success")
                 return redirect('/home')
         if 'login-button' in request.form:
