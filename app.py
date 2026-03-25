@@ -10,6 +10,7 @@ from passlib.hash import sha256_crypt
 from datetime import datetime
 import pdfplumber
 import os
+import certifi
 
 load_dotenv()
 
@@ -22,7 +23,7 @@ uri = f"mongodb+srv://{user}:{password}@cluster0.29rc5zg.mongodb.net/?appName=Cl
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
-client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCertificates=True)
+client = MongoClient(uri, server_api=ServerApi('1'), tlsCAFile=certifi.where())
 db = client['flashmind']
 
 def get_text(file):
