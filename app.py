@@ -17,12 +17,12 @@ client_ai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 password = quote_plus(os.getenv("MONGO_PASSWORD"))
 user = os.getenv("MONGO_USER")
-uri = f"mongodb+srv://{user}:{password}@cluster0.29rc5zg.mongodb.net/?appName=Cluster0&tls=true&tlsAllowInvalidCertificates=true"
+uri = f"mongodb+srv://{user}:{password}@cluster0.29rc5zg.mongodb.net/?appName=Cluster0"
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
-client = MongoClient(uri, server_api=ServerApi('1'))
+client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCertificates=True)
 db = client['flashmind']
 
 def get_text(file):
