@@ -1,0 +1,100 @@
+<svg viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow1" cx="20%" cy="30%" r="50%">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="80%" cy="70%" r="45%">
+      <stop offset="0%" stop-color="#F7C948" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#F7C948" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow3" cx="60%" cy="20%" r="30%">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="cardFade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#F7C948" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="line1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF6B35" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FF6B35" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="line2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7C948" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#F7C948" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#F7C948" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base dark background -->
+  <rect width="1440" height="900" fill="#0A0A0F"/>
+
+  <!-- Subtle noise texture via tiny dots -->
+  <g opacity="0.03">
+    <circle cx="120" cy="80" r="1" fill="white"/><circle cx="340" cy="150" r="0.8" fill="white"/>
+    <circle cx="560" cy="60" r="1.2" fill="white"/><circle cx="780" cy="200" r="0.6" fill="white"/>
+    <circle cx="1000" cy="120" r="1" fill="white"/><circle cx="1200" cy="90" r="0.8" fill="white"/>
+    <circle cx="200" cy="300" r="0.7" fill="white"/><circle cx="440" cy="400" r="1" fill="white"/>
+    <circle cx="660" cy="350" r="0.9" fill="white"/><circle cx="880" cy="450" r="1.1" fill="white"/>
+    <circle cx="1100" cy="380" r="0.6" fill="white"/><circle cx="1300" cy="300" r="0.8" fill="white"/>
+    <circle cx="150" cy="550" r="1" fill="white"/><circle cx="370" cy="620" r="0.7" fill="white"/>
+    <circle cx="590" cy="580" r="1.2" fill="white"/><circle cx="810" cy="650" r="0.5" fill="white"/>
+    <circle cx="1030" cy="600" r="0.9" fill="white"/><circle cx="1250" cy="550" r="1" fill="white"/>
+    <circle cx="100" cy="750" r="0.8" fill="white"/><circle cx="320" cy="800" r="1" fill="white"/>
+    <circle cx="540" cy="770" r="0.6" fill="white"/><circle cx="760" cy="830" r="1.1" fill="white"/>
+    <circle cx="980" cy="780" r="0.7" fill="white"/><circle cx="1350" cy="720" r="0.9" fill="white"/>
+  </g>
+
+  <!-- Ambient glows -->
+  <rect width="1440" height="900" fill="url(#glow1)"/>
+  <rect width="1440" height="900" fill="url(#glow2)"/>
+  <rect width="1440" height="900" fill="url(#glow3)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="300" x2="1440" y2="300" stroke="url(#line1)" stroke-width="0.5"/>
+  <line x1="0" y1="600" x2="1440" y2="600" stroke="url(#line1)" stroke-width="0.5"/>
+  <line x1="480" y1="0" x2="480" y2="900" stroke="url(#line2)" stroke-width="0.5"/>
+  <line x1="960" y1="0" x2="960" y2="900" stroke="url(#line2)" stroke-width="0.5"/>
+
+  <!-- Floating ghost cards - scattered, different rotations and opacities -->
+  <!-- Card cluster top-left -->
+  <rect x="80" y="120" width="64" height="84" rx="6" fill="url(#cardFade)" transform="rotate(-12 112 162)" opacity="0.4"/>
+  <rect x="130" y="90" width="64" height="84" rx="6" fill="url(#cardFade)" transform="rotate(8 162 132)" opacity="0.25"/>
+  <rect x="60" y="200" width="48" height="64" rx="5" fill="url(#cardFade)" transform="rotate(-5 84 232)" opacity="0.2"/>
+
+  <!-- Card cluster top-right -->
+  <rect x="1200" y="80" width="72" height="94" rx="7" fill="url(#cardFade)" transform="rotate(15 1236 127)" opacity="0.3"/>
+  <rect x="1280" y="140" width="56" height="74" rx="6" fill="url(#cardFade)" transform="rotate(-8 1308 177)" opacity="0.2"/>
+
+  <!-- Card cluster bottom-left -->
+  <rect x="100" y="680" width="58" height="76" rx="6" fill="url(#cardFade)" transform="rotate(10 129 718)" opacity="0.3"/>
+  <rect x="180" y="720" width="50" height="66" rx="5" fill="url(#cardFade)" transform="rotate(-6 205 753)" opacity="0.2"/>
+
+  <!-- Card cluster bottom-right -->
+  <rect x="1220" y="640" width="68" height="88" rx="6" fill="url(#cardFade)" transform="rotate(-14 1254 684)" opacity="0.35"/>
+  <rect x="1300" y="700" width="52" height="68" rx="5" fill="url(#cardFade)" transform="rotate(6 1326 734)" opacity="0.2"/>
+  <rect x="1160" y="720" width="44" height="58" rx="4" fill="url(#cardFade)" transform="rotate(18 1182 749)" opacity="0.15"/>
+
+  <!-- Scattered single cards mid-field -->
+  <rect x="350" y="180" width="40" height="52" rx="4" fill="url(#cardFade)" transform="rotate(-20 370 206)" opacity="0.12"/>
+  <rect x="1050" y="200" width="44" height="58" rx="4" fill="url(#cardFade)" transform="rotate(22 1072 229)" opacity="0.1"/>
+  <rect x="300" y="600" width="38" height="50" rx="4" fill="url(#cardFade)" transform="rotate(14 319 625)" opacity="0.1"/>
+  <rect x="1080" y="620" width="42" height="56" rx="4" fill="url(#cardFade)" transform="rotate(-18 1101 648)" opacity="0.12"/>
+
+  <!-- Tiny accent dots (like sparks from the logo) -->
+  <circle cx="200" cy="160" r="2" fill="#FF6B35" opacity="0.3"/>
+  <circle cx="1260" cy="110" r="1.5" fill="#F7C948" opacity="0.25"/>
+  <circle cx="160" cy="740" r="2" fill="#F7C948" opacity="0.2"/>
+  <circle cx="1340" cy="680" r="1.5" fill="#FF6B35" opacity="0.25"/>
+  <circle cx="720" cy="140" r="1.5" fill="#FF6B35" opacity="0.15"/>
+  <circle cx="680" cy="780" r="1.5" fill="#F7C948" opacity="0.15"/>
+
+  <!-- Very subtle vignette -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="0%" stop-color="#0A0A0F" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0A0A0F" stop-opacity="0.6"/>
+  </radialGradient>
+  <rect width="1440" height="900" fill="url(#vignette)"/>
+</svg>

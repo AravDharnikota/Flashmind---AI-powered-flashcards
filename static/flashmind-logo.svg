@@ -1,0 +1,38 @@
+<svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#F7C948"/>
+    </linearGradient>
+    <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7C948"/>
+      <stop offset="100%" stop-color="#FF6B35"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Card stack icon -->
+  <!-- Back card -->
+  <rect x="52" y="52" width="72" height="96" rx="8" fill="#2D2D2D" opacity="0.15" transform="rotate(-6 88 100)"/>
+  <!-- Middle card -->
+  <rect x="48" y="48" width="72" height="96" rx="8" fill="#2D2D2D" opacity="0.25" transform="rotate(3 84 96)"/>
+  <!-- Front card -->
+  <rect x="44" y="44" width="72" height="96" rx="8" fill="url(#cardGrad)" stroke="#FF6B35" stroke-width="0"/>
+  
+  <!-- Lightning bolt on card -->
+  <path d="M72 68 L66 92 L76 88 L70 116 L90 82 L78 86 L86 68 Z" fill="white" opacity="0.95"/>
+
+  <!-- Spark particles -->
+  <circle cx="124" cy="52" r="3" fill="#F7C948" opacity="0.8"/>
+  <circle cx="132" cy="68" r="2" fill="#FF6B35" opacity="0.6"/>
+  <circle cx="118" cy="40" r="2.5" fill="#FF6B35" opacity="0.7"/>
+
+  <!-- App name -->
+  <text x="152" y="112" font-family="'Georgia', serif" font-size="64" font-weight="bold" fill="#1A1A1A" letter-spacing="-2">
+    flash<tspan fill="url(#cardGrad)">mind</tspan>
+  </text>
+
+  <!-- Tagline -->
+  <text x="156" y="140" font-family="'Helvetica Neue', sans-serif" font-size="16" fill="#888" letter-spacing="3" text-transform="uppercase">
+    AI-POWERED STUDY CARDS
+  </text>
+</svg>

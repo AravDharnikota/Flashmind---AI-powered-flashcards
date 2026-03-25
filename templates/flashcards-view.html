@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ set.title }} — MyFlashmind</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+      }
+      .navbar {
+        padding-top: 0;
+        padding-bottom: 0;
+        height: 75px;
+      }
+
+      /* Scrollable file row */
+      .file-row {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        overflow-x: auto;
+        padding: 12px 0;
+        scrollbar-width: thin;
+      }
+      .file-tile {
+        min-width: 120px;
+        height: 120px;
+        background: #e9ecef;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        color: #555;
+        text-align: center;
+        padding: 8px;
+        flex-shrink: 0;
+      }
+      .file-tile .file-icon {
+        font-size: 2rem;
+        margin-bottom: 6px;
+      }
+
+      /* Upload button tile */
+      .file-tile-upload {
+        border: 2px dashed #adb5bd;
+        background: transparent;
+        cursor: pointer;
+        color: #adb5bd;
+      }
+      .file-tile-upload:hover {
+        border-color: #0d6efd;
+        color: #0d6efd;
+      }
+
+      /* Loading overlay */
+      #loading-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.92);
+        z-index: 9999;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+      }
+      #loading-overlay.active {
+        display: flex;
+      }
+      .loading-spinner {
+        width: 56px;
+        height: 56px;
+        border: 5px solid #e9ecef;
+        border-top-color: #0d6efd;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .loading-text {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+      }
+      .loading-sub {
+        font-size: 0.85rem;
+        color: #888;
+        margin-top: -12px;
+      }
+
+      /* Flashcard carousel */
+      .card-counter {
+        font-size: 0.9rem;
+        color: #888;
+      }
+      .flashcard-carousel {
+        background: white;
+        border-radius: 16px;
+        padding: 80px 64px;
+        min-height: 360px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        transition: box-shadow 0.2s;
+        user-select: none;
+      }
+      .flashcard-carousel:hover {
+        box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12);
+      }
+      .flashcard-carousel .question {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #222;
+      }
+      .flashcard-carousel .answer {
+        display: none;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        color: #555;
+        font-size: 1rem;
+      }
+      .flashcard-carousel.flipped .answer {
+        display: block;
+      }
+      .flip-hint {
+        font-size: 0.78rem;
+        color: #aaa;
+        margin-top: 12px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Generating your flashcards...</div>
+      <div class="loading-sub">This usually takes 10–30 seconds. Hang tight!</div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <div class="d-flex align-items-center gap-3">
+          <a href="/home" class="btn btn-outline-secondary btn-sm">← Back</a>
+          <a class="navbar-brand mb-0" href="/home">
+            <img
+              src="../static/flashmind-logo.svg"
+              alt="Logo"
+              style="height: 70px; width: auto"
+            />
+          </a>
+        </div>
+        <a href="/logout" class="btn btn-warning">Logout</a>
+      </div>
+    </nav>
+
+    <div class="container mt-4">
+      <!-- Title -->
+      <h2 class="fw-bold mb-1">{{ set.title }}</h2>
+      <p class="text-muted mb-3">{{ set.flashcards | length }} cards</p>
+
+      <!-- File row -->
+      <div class="file-row">
+        {% for file in set.files %}
+        <div class="file-tile" style="position: relative;">
+          <form method="POST" action="/set/{{ set._id }}/delete-file" style="position: absolute; top: 4px; right: 4px;">
+            <input type="hidden" name="filename" value="{{ file.name }}">
+            <button type="submit" style="background: none; border: none; cursor: pointer; font-size: 0.75rem; color: #999; line-height: 1;">✕</button>
+          </form>
+          <div class="file-icon">📄</div>
+          <span>{{ file.name }}</span>
+        </div>
+        {% endfor %}
+
+        <!-- Upload button -->
+        <form
+          method="POST"
+          action="/set/{{ set._id }}/upload"
+          enctype="multipart/form-data"
+          class="d-flex"
+          id="upload-form"
+        >
+          <label class="file-tile file-tile-upload" for="file-upload">
+            <div class="file-icon">+</div>
+            <span>Upload files</span>
+          </label>
+          <input
+            id="file-upload"
+            type="file"
+            name="files"
+            multiple
+            style="display: none"
+            onchange="document.getElementById('loading-overlay').classList.add('active'); this.form.submit();"
+          />
+        </form>
+      </div>
+
+      <hr />
+
+      <!-- Flashcards carousel -->
+      {% if set.flashcards %}
+      {% set cards = set.flashcards %}
+      <div class="d-flex flex-column align-items-center mt-3" style="max-width: 720px; margin: 0 auto;">
+        <div class="card-counter mb-3">
+          <span id="current-num">1</span> / <span id="total-num">{{ cards | length }}</span>
+        </div>
+
+        <div class="flashcard-carousel w-100" id="flashcard" style="position: relative;" onclick="this.classList.toggle('flipped')">
+          <span id="flag-btn" onclick="event.stopPropagation(); flagCard();" style="position: absolute; top: 16px; right: 20px; font-size: 1.4rem; cursor: pointer; color: #ccc;">⚑</span>
+          {% for card in cards %}
+          <div class="card-slide" id="card-{{ loop.index0 }}" style="display: {% if loop.first %}block{% else %}none{% endif %}; width: 100%;">
+            <div class="question">{{ card.question }}</div>
+            <div class="answer">{{ card.answer }}</div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="flip-hint">Click card to reveal answer</div>
+
+        <div class="d-flex gap-3 mt-4 align-items-center">
+          <button class="btn btn-outline-secondary px-4" onclick="changeCard(-1)">← Prev</button>
+          <button class="btn btn-primary px-4" onclick="changeCard(1)">Next →</button>
+        </div>
+      </div>
+      {% else %}
+      <div class="text-center text-muted py-5">
+        <p>No flashcards yet. Upload your notes to generate them!</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      let current = 0;
+      const total = {{ set.flashcards | length }};
+      const flagged = {{ set.flashcards | map(attribute='flagged', default=false) | list | tojson }};
+
+      function updateFlagBtn() {
+        const btn = document.getElementById('flag-btn');
+        btn.style.color = flagged[current] ? '#dc3545' : '#ccc';
+      }
+
+      function changeCard(dir) {
+        document.getElementById('card-' + current).style.display = 'none';
+        current = (current + dir + total) % total;
+        document.getElementById('card-' + current).style.display = 'block';
+        document.getElementById('current-num').textContent = current + 1;
+        document.getElementById('flashcard').classList.remove('flipped');
+        updateFlagBtn();
+      }
+
+      function flagCard() {
+        flagged[current] = !flagged[current];
+        updateFlagBtn();
+        fetch(`/set/{{ set._id }}/flag/${current}`, { method: 'POST' });
+      }
+
+      updateFlagBtn();
+    </script>
+  </body>
+</html>
